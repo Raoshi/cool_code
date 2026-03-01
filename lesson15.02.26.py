@@ -34,12 +34,6 @@ class Board:
             [0, 0, 0, 0, 0],
         ]
 
-    def draw(self, mouse):
-        self.mouse = pg.mouse.get_pressed()
-        if self.mouse[0]:
-            draw_empty()
-        if self.mouse[1]:
-            draw_flag()
 
     def click(self, mouse_pos):
         x = mouse_pos[0] // self.size
@@ -50,12 +44,7 @@ class Board:
         for i in range(int(self.W / self.size)):
             pg.draw.line(win, GRAY, (0, (i + 1) * self.size), (self.W, (i + 1) * self.size))
             pg.draw.line(win, GRAY, ((i + 1) * self.size, 0), ((i + 1) * self.size, self.H))
-        for y in range(3):
-            for x in range(3):
-                if self.board[y][x] == 1:
-                    draw_flag(win, x, y, self.size)
-                elif self.board[y][x] == -1:
-                    draw_empty(win, x, y, self.size)
+
 
 board = Board(W, H, 120)
 while True:
