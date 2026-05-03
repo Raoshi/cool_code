@@ -50,14 +50,36 @@ class Enemy(pg.sprite.Sprite):
         elif self.rect.left < 200:
             self.x = 3
 
+class Arrow(pg.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pg.image.load('arrow.png')
+        self.image = pg.transform.scale(self.image, (50, 50))
+        self.rect = self.image.get_rect()
+        self.speed = 3
+        self.rect.left = player.recst.left
+        self.rect.top = player.rect.top
+
+    def update(self):
+        self.move()
+
+    def move(self):
+        self.rect.y -= self.speed
+        if self.rect.bottom < 0:
+            self.kill()
+
+
 
 all_sprites = pg.sprite.Group()
 player = Player()
 all_sprites.add(player)
 
+
 enemy_sprites = pg.sprite.Group()
 enemy = Enemy()
 enemy_sprites.add(enemy)
+
+arrow_sprites = pg.sprite.Group()
 
 background_image = pg.image.load('space.jpg')
 background_image = pg.transform.scale(background_image, (W, H))
@@ -72,14 +94,22 @@ while True:
         if event.type == pg.QUIT:
             pg.quit()
             exit()
+
+        if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+            arrow = Arrow()
+            all_sprites.add(arrow_sprites)
+            arrow_sprites.add(arrow)
+
     win.blit(background_image, (0, backgroundY))
     win.blit(background_image2, (0, backgroundY2))
 
     all_sprites.draw(win)
     enemy_sprites.draw(win)
+    arrow_sprites.draw(win)
 
     all_sprites.update()
     enemy_sprites.update()
+    arrow_sprites.update()
 
     backgroundY -= 2
     backgroundY2 -= 2
