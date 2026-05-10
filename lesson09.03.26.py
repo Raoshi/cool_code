@@ -36,7 +36,7 @@ class Enemy(pg.sprite.Sprite):
         self.image = pg.image.load('enemy.png')
         self.image = pg.transform.scale(self.image, (50, 50))
         self.rect = self.image.get_rect()
-        self.health = 100
+        self.health = 10
     def update(self):
         self.move()
     def move(self):
